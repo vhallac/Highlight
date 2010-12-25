@@ -1,0 +1,160 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+<Script file="Highlight.lua"/>
+	<Frame name="Highlight_BagFrame" toplevel="true" frameStrata="DIALOG" parent="ContainerFrame1" hidden="false">
+        <Frames>
+            <EditBox name="Highlight_EditBox" letters="50">
+				<Size>
+					<AbsDimension x="140" y="20"/>
+				</Size>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentLeft" file="Interface\Common\Common-Input-Border">
+							<Size>
+								<AbsDimension x="8" y="25"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="-5" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0" right="0.0625" top="0" bottom="0.625"/>
+						</Texture>
+						<Texture name="$parentRight" file="Interface\Common\Common-Input-Border">
+							<Size>
+								<AbsDimension x="8" y="25"/>
+							</Size>
+							<Anchors>
+								<Anchor point="RIGHT">
+									<Offset>
+										<AbsDimension x="-10" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0.9375" right="1.0" top="0" bottom="0.625"/>
+						</Texture>
+						<Texture name="$parentMiddle" file="Interface\Common\Common-Input-Border">
+							<Size>
+								<AbsDimension x="10" y="25"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT"/>
+								<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT"/>
+							</Anchors>
+							<TexCoords left="0.0625" right="0.9375" top="0" bottom="0.625"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Anchors>
+					<Anchor point="BOTTOM" relativeTo="ContainerFrame1" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="-10" y="-20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<FontString inherits="ChatFontNormal"/>
+				<Scripts>
+					<OnLoad>
+						self:SetAutoFocus(false);
+					</OnLoad>					                   
+					<OnHide>
+						self:SetText("");
+						Highlight_Search("");
+					</OnHide>
+                     <OnTextChanged>
+						Highlight_Search(self:GetText(), true, true);
+					</OnTextChanged>
+                    <OnEnterPressed >
+						Highlight_Search(self:GetText(), true, true);
+                        self:HighlightText(self);
+					</OnEnterPressed>
+					<OnTabPressed>
+						self:ClearFocus(self);
+					</OnTabPressed>
+                    <OnEscapePressed>
+						self:ClearFocus(self);
+                    </OnEscapePressed>
+				</Scripts>
+			</EditBox>
+            <EditBox name="Highlight_Count" letters="3">
+            	<Size>
+					<AbsDimension x="30" y="20"/>
+				</Size>
+                <Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentLeft" file="Interface\Common\Common-Input-Border">
+							<Size>
+								<AbsDimension x="8" y="25"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="-5" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0" right="0.0625" top="0" bottom="0.625"/>
+						</Texture>
+                        	<Texture name="$parentRight" file="Interface\Common\Common-Input-Border">
+							<Size>
+								<AbsDimension x="8" y="25"/>
+							</Size>
+							<Anchors>
+								<Anchor point="RIGHT">
+									<Offset>
+										<AbsDimension x="5" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0.9375" right="1.0" top="0" bottom="0.625"/>
+						</Texture>
+						<Texture name="$parentMiddle" file="Interface\Common\Common-Input-Border">
+							<Size>
+								<AbsDimension x="20" y="25"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT"/>
+								<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT"/>
+							</Anchors>
+							<TexCoords left="0.0625" right="0.9375" top="0" bottom="0.625"/>
+						</Texture>
+                    </Layer>
+                </Layers>
+                <Anchors>
+                    <Anchor point="RIGHT" relativeTo="Highlight_EditBox" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="26" y="0"/>
+                        </Offset>
+                    </Anchor>   
+                </Anchors>
+                <FontString inherits="ChatFontNormal"/>
+                <Scripts>
+                	<OnLoad>
+						self:SetAutoFocus(false);
+					</OnLoad>					                   
+					<OnShow>
+						self:SetText("---");
+					</OnShow>	
+                    <OnEditFocusGained>
+                       	self:ClearFocus(); 
+                    </OnEditFocusGained>
+                </Scripts>
+            </EditBox>                 
+		</Frames>
+		
+		<Scripts>
+			<OnLoad>
+				self:RegisterEvent("VARIABLES_LOADED");
+				self:RegisterEvent("SKILL_LINES_CHANGED");
+				self:RegisterEvent("PLAYER_ENTERING_WORLD");
+			</OnLoad> 
+         
+			<OnEvent>
+				Highlight_OnEvent(self, event, ...);
+			</OnEvent>
+		</Scripts>
+	</Frame>
+
+
+</Ui>

@@ -1,0 +1,9 @@
+## Interface: 40000
+## Title: Highlight
+## Notes: Highlight items in the bag
+## Author: Weeperman <weeperman@live.co.uk>
+## Version: 2.21
+## DefaultState: enabled
+## LoadOnDemand: 0
+Highlight.xml
+Highlight.lua
